@@ -1,6 +1,7 @@
 return {
 	{
 		"mason-org/mason.nvim",
+		cmd = "Mason",
 		opts = {
 			ui = {
 				icons = {
@@ -12,7 +13,11 @@ return {
 	},
 	{
 		"neovim/nvim-lspconfig",
-		dependencies = { "mason-org/mason.nvim" },
+		dependencies = {
+			"mason-org/mason.nvim",
+			"saghen/blink.cmp",
+		},
+		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
 			local vue_language_server_path = vim.fn.stdpath("data")
@@ -26,11 +31,32 @@ return {
 
 			local servers = {
 				lua_ls = {
-					settings = {
-						Lua = {
-							workspace = { library = vim.api.nvim_get_runtime_file("", true) },
-						},
-					},
+					on_init = function(client)
+						if client.workspace_folders then
+							local path = client.workspace_folders[1].name
+							if
+								path ~= vim.fn.stdpath("config")
+								and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
+							then
+								return
+							end
+						end
+
+						client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
+							runtime = {
+								version = "LuaJIT",
+							},
+							workspace = {
+								checkThirdParty = false,
+								library = {
+									vim.env.VIMRUNTIME,
+									"${3rd}/luv/library",
+								},
+							},
+						})
+					end,
+
+					settings = { Lua = {} },
 				},
 
 				emmet_language_server = {
@@ -52,6 +78,7 @@ return {
 				},
 				html = {},
 				cssls = {},
+				tailwindcss = {},
 				csharp_ls = {},
 				angularls = {},
 				ts_ls = {
