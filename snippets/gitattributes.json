@@ -1,0 +1,13 @@
+{
+  "Windows Line Ending": {
+    "prefix": "win",
+    "description": "Windowss .gitattributes template",
+    "body": [
+      "* text=auto eol=lf",
+      "",
+      "# Windows file have to use CRLF",
+      "*.bat text eol=crlf",
+      "*.cmd text eol=crlf"
+    ]
+  }
+}
