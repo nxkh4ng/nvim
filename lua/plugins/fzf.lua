@@ -6,14 +6,24 @@ return {
 		-- Files
 		{ "<leader><space>", "<CMD>FzfLua files<CR>", desc = "Find Files" },
 		{ "<leader>fb", "<CMD>FzfLua buffers<CR>", desc = "Find Buffers" },
-		-- Search
-		{ "<leader>sg", "<CMD>FzfLua live_grep<CR>", desc = "Searh Grep" },
+		-- Grep
+		{ "<leader>/", "<CMD>FzfLua live_grep<CR>", desc = "Searh Grep" },
 		{ "<leader>sv", "<CMD>FzfLua grep_visual<CR>", desc = "Search Visual", mode = "v" },
+		-- Git
+		{ "<leader>gs", "<CMD>FzfLua git_status<CR>", desc = "Git Status" },
+		{ "<leader>gc", "<CMD>FzfLua git_commits<CR>", desc = "Git Commits (project)" },
+		-- Misc
+		{ "<leader>sh", "<CMD>FzfLua helptags<CR>", desc = "Help Tags" },
+		{ "<leader>sK", "<CMD>FzfLua keymaps<CR>", desc = "Keymaps" },
+		{ "<leader>sH", "<CMD>FzfLua highlights<CR>", desc = "Highlight Groups" },
+		{ "<leader>sC", "<CMD>FzfLua colorschemes<CR>", desc = "Color Schemes" },
 	},
 	opts = {
 		fzf_bin = "fzf",
 		winopts = {
+			border = "single",
 			preview = {
+				border = "single",
 				delay = 20,
 			},
 		},
