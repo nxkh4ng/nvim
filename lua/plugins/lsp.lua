@@ -59,6 +59,20 @@ return {
 					settings = { Lua = {} },
 				},
 
+				gopls = {
+					settings = {
+						gopls = {
+							analyses = {
+								unusedparams = true,
+								unusedvariable = true,
+							},
+							completeUnimported = true,
+							staticcheck = true,
+							usePlaceholders = true,
+						},
+					},
+				},
+
 				emmet_language_server = {
 					filetypes = {
 						"astro",
