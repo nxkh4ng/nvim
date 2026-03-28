@@ -10,6 +10,7 @@ return {
 		{ "<leader>/", "<CMD>FzfLua live_grep<CR>", desc = "Searh Grep" },
 		{ "<leader>sv", "<CMD>FzfLua grep_visual<CR>", desc = "Search Visual", mode = "v" },
 		-- Git
+		{ "<leader>gb", "<CMD>FzfLua git_branches<CR>", desc = "Git Branches" },
 		{ "<leader>gs", "<CMD>FzfLua git_status<CR>", desc = "Git Status" },
 		{ "<leader>gc", "<CMD>FzfLua git_commits<CR>", desc = "Git Commits (project)" },
 		-- Misc
