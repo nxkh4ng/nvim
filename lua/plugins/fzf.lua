@@ -19,40 +19,58 @@ return {
 		{ "<leader>sH", "<CMD>FzfLua highlights<CR>", desc = "Highlight Groups" },
 		{ "<leader>sC", "<CMD>FzfLua colorschemes<CR>", desc = "Color Schemes" },
 	},
-	opts = {
-		fzf_bin = "fzf",
-		winopts = {
-			border = "single",
-			preview = {
+	config = function()
+		local actions = require("fzf-lua.actions")
+		require("fzf-lua").setup({
+			fzf_bin = "fzf",
+			winopts = {
 				border = "single",
-				delay = 20,
+				preview = {
+					border = "single",
+					delay = 20,
+				},
 			},
-		},
-		files = {
-			multiprocess = true,
-			fd_opts = "--color=never --hidden --type f --type l --exclude .git",
-			rg_opts = "--color=never --hidden --files --glob=!.git",
-			find_opts = [[-type f -not -path "*/.git/*"]],
-			git_icons = false,
-			file_icons = true,
-		},
-		grep = {
-			multiprocess = true,
-			rg_opts = "--column --line-number --no-heading --color=always" .. " --smart-case --max-columns=4096",
-			rg_glob = true,
-			glob_flag = "--iglob",
-			glob_separator = "%s%-%-",
-			git_icons = false,
-			file_icons = true,
-		},
-		oldfiles = {
-			stat_file = true,
-			include_current_session = false,
-			ignore_current_buffer = true,
-		},
-	},
-	config = function(_, opts)
-		require("fzf-lua").setup(opts)
+			keymap = {
+				builtin = {
+					["<M-n>"] = "down",
+					["<M-p>"] = "up",
+					["<M-S-n>"] = "preview-down",
+					["<M-S-p>"] = "preview-up",
+				},
+			},
+			git = {
+				status = {
+					actions = {
+						["right"] = false,
+						["left"] = false,
+						["alt-s"] = { fn = actions.git_stage_unstage, reload = true },
+						["alt-x"] = { fn = actions.git_reset, reload = true },
+					},
+				},
+			},
+			files = {
+				multiprocess = true,
+				fd_opts = "--color=never --hidden --type f --type l --exclude .git",
+				rg_opts = "--color=never --hidden --files --glob=!.git",
+				find_opts = [[-type f -not -path "*/.git/*"]],
+				git_icons = false,
+				file_icons = true,
+			},
+			grep = {
+				multiprocess = true,
+				rg_opts = "--column --line-number --no-heading --color=always" .. " --smart-case --max-columns=4096",
+				rg_glob = true,
+				glob_flag = "--iglob",
+				glob_separator = "%s%-%-",
+				git_icons = false,
+				file_icons = true,
+			},
+			oldfiles = {
+				stat_file = true,
+				include_current_session = false,
+				ignore_current_buffer = true,
+			},
+		})
 		require("fzf-lua").register_ui_select({
 			winopts = {
 				height = 0.50,
