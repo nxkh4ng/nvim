@@ -90,6 +90,7 @@ return {
 						-- "vue",
 					},
 				},
+				basedpyright = {},
 				html = {},
 				cssls = {},
 				tailwindcss = {},

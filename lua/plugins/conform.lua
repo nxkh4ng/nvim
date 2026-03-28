@@ -18,6 +18,7 @@ return {
 	opts = {
 		-- Define your formatters
 		formatters_by_ft = {
+			python = { "isort", "black" },
 			go = { "goimports", "gofumpt" },
 			lua = { "stylua" },
 			html = { "prettierd", "prettier", stop_after_first = true },
