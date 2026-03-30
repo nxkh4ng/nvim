@@ -43,8 +43,8 @@ return {
 			end)
 			map("n", "<leader>hu", gitsigns.undo_stage_hunk)
 
-			-- Preview
-			map("n", "<leader>hp", gitsigns.preview_hunk)
+			-- Preview Inline
+			map("n", "<leader>hp", gitsigns.preview_hunk_inline)
 
 			-- Blame line
 			map("n", "<leader>bl", function()
