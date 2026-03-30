@@ -39,7 +39,29 @@ return {
 				},
 			},
 			git = {
+				commits = {
+					winopts = {
+						preview = {
+							layout = "vertical",
+							vertical = "down:60%",
+						},
+					},
+				},
+				branches = {
+					winopts = {
+						preview = {
+							layout = "vertical",
+							vertical = "down:60%",
+						},
+					},
+				},
 				status = {
+					winopts = {
+						preview = {
+							layout = "vertical",
+							vertical = "down:60%",
+						},
+					},
 					actions = {
 						["right"] = false,
 						["left"] = false,
