@@ -32,10 +32,8 @@ return {
 			},
 			keymap = {
 				builtin = {
-					["<M-n>"] = "down",
-					["<M-p>"] = "up",
-					["<M-S-n>"] = "preview-down",
 					["<M-S-p>"] = "preview-up",
+					["<M-S-n>"] = "preview-down",
 				},
 			},
 			git = {
