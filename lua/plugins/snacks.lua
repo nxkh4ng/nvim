@@ -4,6 +4,10 @@ return {
 	priority = 1000,
 	lazy = false,
 	opts = {
+		indent = {
+			enabled = true,
+			animate = { enabled = false },
+		},
 		picker = {
 			enabled = true,
 			win = {
