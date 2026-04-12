@@ -65,10 +65,41 @@ return {
 							analyses = {
 								unusedparams = true,
 								unusedvariable = true,
+								unusedwrite = true,
+								useany = true,
+								nilness = true,
+								shadow = true,
+								httpresponse = true,
+								loopclosure = true,
+								lostcancel = true,
+								printf = true,
+								stringintconv = true,
+								testinggoroutine = true,
+								undeclaredname = true,
 							},
+							-- Completion
 							completeUnimported = true,
-							staticcheck = true,
 							usePlaceholders = true,
+							deepCompletion = true,
+							matcher = "Fuzzy",
+							experimentalPostfixCompletions = true,
+
+							-- Diagnostics
+							staticcheck = true,
+							vulncheck = "Imports",
+
+							-- Formatting
+							gofumpt = true,
+
+							-- Navigation & Code Lens
+							codelenses = {
+								gc_details = true,
+								generate = true,
+								run_govulncheck = true,
+								tidy = true,
+								upgrade_dependency = true,
+								vendor = false,
+							},
 						},
 					},
 				},
