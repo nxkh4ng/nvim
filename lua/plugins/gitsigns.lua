@@ -35,16 +35,22 @@ return {
 			end)
 
 			-- Stage / Reset / Undo
+			map("n", "<leader>hs", gitsigns.stage_hunk)
 			map("v", "<leader>hs", function()
 				gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
 			end)
+			map("n", "<leader>hr", gitsigns.reset_hunk)
 			map("v", "<leader>hr", function()
 				gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
 			end)
 			map("n", "<leader>hu", gitsigns.undo_stage_hunk)
 
+			-- Diff
+			map("n", "<leader>hd", gitsigns.diffthis)
+
 			-- Preview Inline
-			map("n", "<leader>hp", gitsigns.preview_hunk_inline)
+			map("n", "<leader>hp", gitsigns.preview_hunk)
+			map("n", "<leader>hi", gitsigns.preview_hunk_inline)
 
 			-- Blame line
 			map("n", "<leader>bl", function()
