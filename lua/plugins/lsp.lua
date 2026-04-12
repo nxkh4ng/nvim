@@ -133,27 +133,16 @@ return {
 				},
 			})
 
-			-- Fzf-lua
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("UserLspAttach", { clear = true }),
 				callback = function(event)
-					local fzf = require("fzf-lua")
 					local buf = event.buf
 					local map = function(mode, lhs, rhs, desc)
 						vim.keymap.set(mode, lhs, rhs, { buffer = buf, desc = desc })
 					end
 
-					map("n", "gd", fzf.lsp_definitions, "Goto definition")
-					map("n", "gD", fzf.lsp_declarations, "Goto declaration")
-					map("n", "gi", fzf.lsp_implementations, "Goto implementation")
-					map("n", "gt", fzf.lsp_typedefs, "Goto type definition")
-					map("n", "gr", fzf.lsp_references, "References")
-					map("n", "gs", fzf.lsp_document_symbols, "Document symbols")
-					map("n", "gS", fzf.lsp_workspace_symbols, "Workspace symbols")
-					map("n", "<leader>ca", fzf.lsp_code_actions, "Code action")
-					map("v", "<leader>ca", fzf.lsp_code_actions, "Code action")
-
 					map("n", "K", vim.lsp.buf.hover, "Hover docs")
+					map("n", "<leader>ca", vim.lsp.buf.code_action, "Code Actions")
 					map("n", "df", vim.diagnostic.open_float, "Diagnostics Float")
 					map("n", "<C-k>", vim.lsp.buf.signature_help, "Signature help")
 					map("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
