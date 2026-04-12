@@ -30,5 +30,5 @@ map("v", ">", ">gv")
 
 -- Tabs
 map("n", "<leader>tn", "<cmd>tabnew<cr>", { desc = "New tab" })
-map("n", "<C-h>", "<cmd>tabp<cr>", { desc = "Next tab" })
-map("n", "<C-l>", "<cmd>tabn<cr>", { desc = "Prev tab" })
+map("n", "H", "<cmd>tabp<cr>", { desc = "Next tab" })
+map("n", "L", "<cmd>tabn<cr>", { desc = "Prev tab" })

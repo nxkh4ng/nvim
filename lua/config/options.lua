@@ -12,7 +12,7 @@ opt.splitright = true
 opt.confirm = true
 opt.scrolloff = 10
 opt.updatetime = 200
-opt.timeoutlen = 300
+opt.timeoutlen = 500
 
 -- Shell
 if vim.fn.has("win32") == 1 then
