@@ -28,39 +28,6 @@ return {
 	config = function(_, opts)
 		require("snacks").setup(opts)
 
-		-- LSP
-		vim.api.nvim_create_autocmd("LspAttach", {
-			group = vim.api.nvim_create_augroup("UserLspAttach", { clear = true }),
-			callback = function()
-				local buf = event.buf
-				local map = function(mode, lhs, rhs, desc)
-					vim.keymap.set(mode, lhs, rhs, { buffer = buf, desc = desc })
-				end
-
-				map("n", "gd", function()
-					Snacks.picker.lsp_definitions()
-				end, "Goto Definition")
-				map("n", "gD", function()
-					Snacks.picker.lsp_declarations()
-				end, "Goto Declarations")
-				map("n", "gr", function()
-					Snacks.picker.lsp_references()
-				end, "Goto References")
-				map("n", "gi", function()
-					Snacks.picker.lsp_implementations()
-				end, "Goto Implementation")
-				map("n", "gt", function()
-					Snacks.picker.lsp_type_definitions()
-				end, "Goto Type Definition")
-				map("n", "gs", function()
-					Snacks.picker.lsp_symbols()
-				end, "LSP Symbols")
-				map("n", "gS", function()
-					Snacks.picker.lsp_workspace_symbols()
-				end, "LSP Workspace Symbols")
-			end,
-		})
-
 		-- Files
 		vim.keymap.set("n", "<leader><space>", function()
 			Snacks.picker.files()
