@@ -4,6 +4,8 @@ return {
 	priority = 1000,
 	lazy = false,
 	opts = {
+		quickfile = { enabled = true },
+		gh = { enabled = true },
 		indent = {
 			enabled = true,
 			animate = { enabled = false },
@@ -23,157 +25,86 @@ return {
 			},
 		},
 	},
-	keys = {
-		-- Files
-		{
-			"<leader><space>",
-			function()
-				Snacks.picker.files()
-			end,
-			desc = "Find files",
-		},
-
-		-- Search
-		{
-			"<leader>/",
-			function()
-				Snacks.picker.grep()
-			end,
-			desc = "Grep",
-		},
-		{
-			"<leader>/w",
-			function()
-				Snacks.picker.grep_word()
-			end,
-			desc = "Visual selection or word",
-			mode = { "n", "x" },
-		},
-		{
-			"<leader>sh",
-			function()
-				Snacks.picker.help()
-			end,
-			desc = "Help Pages",
-		},
-		{
-			"<leader>sk",
-			function()
-				Snacks.picker.keymaps()
-			end,
-			desc = "Keymaps",
-		},
-		{
-			"<leader>sk",
-			function()
-				Snacks.picker.keymaps()
-			end,
-			desc = "Keymaps",
-		},
-
-		-- Git
-		{
-			"<leader>gb",
-			function()
-				Snacks.picker.git_branches()
-			end,
-			desc = "Git Branches",
-		},
-		{
-			"<leader>gl",
-			function()
-				Snacks.picker.git_log()
-			end,
-			desc = "Git Log",
-		},
-		{
-			"<leader>gs",
-			function()
-				Snacks.picker.git_status()
-			end,
-			desc = "Git Status",
-		},
-		{
-			"<leader>gd",
-			function()
-				Snacks.picker.git_diff()
-			end,
-			desc = "Git Diff",
-		},
+	config = function(_, opts)
+		require("snacks").setup(opts)
 
 		-- LSP
-		{
-			"gd",
-			function()
-				Snacks.picker.lsp_definitions()
+		vim.api.nvim_create_autocmd("LspAttach", {
+			group = vim.api.nvim_create_augroup("UserLspAttach", { clear = true }),
+			callback = function()
+				local buf = event.buf
+				local map = function(mode, lhs, rhs, desc)
+					vim.keymap.set(mode, lhs, rhs, { buffer = buf, desc = desc })
+				end
+
+				map("n", "gd", function()
+					Snacks.picker.lsp_definitions()
+				end, "Goto Definition")
+				map("n", "gD", function()
+					Snacks.picker.lsp_declarations()
+				end, "Goto Declarations")
+				map("n", "gr", function()
+					Snacks.picker.lsp_references()
+				end, "Goto References")
+				map("n", "gi", function()
+					Snacks.picker.lsp_implementations()
+				end, "Goto Implementation")
+				map("n", "gt", function()
+					Snacks.picker.lsp_type_definitions()
+				end, "Goto Type Definition")
+				map("n", "gs", function()
+					Snacks.picker.lsp_symbols()
+				end, "LSP Symbols")
+				map("n", "gS", function()
+					Snacks.picker.lsp_workspace_symbols()
+				end, "LSP Workspace Symbols")
 			end,
-			desc = "Goto Definition",
-		},
-		{
-			"gD",
-			function()
-				Snacks.picker.lsp_declarations()
-			end,
-			desc = "Goto Declaration",
-		},
-		{
-			"gr",
-			function()
-				Snacks.picker.lsp_references()
-			end,
-			nowait = true,
-			desc = "References",
-		},
-		{
-			"gi",
-			function()
-				Snacks.picker.lsp_implementations()
-			end,
-			desc = "Goto Implementation",
-		},
-		{
-			"gy",
-			function()
-				Snacks.picker.lsp_type_definitions()
-			end,
-			desc = "Goto Type Definition",
-		},
-		{
-			"gai",
-			function()
-				Snacks.picker.lsp_incoming_calls()
-			end,
-			desc = "Calls Incoming",
-		},
-		{
-			"gao",
-			function()
-				Snacks.picker.lsp_outgoing_calls()
-			end,
-			desc = "Calls Outgoing",
-		},
-		{
-			"<leader>ss",
-			function()
-				Snacks.picker.lsp_symbols()
-			end,
-			desc = "LSP Symbols",
-		},
-		{
-			"<leader>sS",
-			function()
-				Snacks.picker.lsp_workspace_symbols()
-			end,
-			desc = "LSP Workspace Symbols",
-		},
+		})
+
+		-- Files
+		vim.keymap.set("n", "<leader><space>", function()
+			Snacks.picker.files()
+		end, { desc = "Find Files" })
+
+		-- Search
+		vim.keymap.set("n", "<leader>/", function()
+			Snacks.picker.grep()
+		end, { desc = "Grep" })
+		vim.keymap.set({ "n", "v" }, "<leader>/w", function()
+			Snacks.picker.grep_word()
+		end, { desc = "Grep Word" })
+		vim.keymap.set("n", "<leader>sh", function()
+			Snacks.picker.help()
+		end, { desc = "Help Pages" })
+		vim.keymap.set("n", "<leader>sk", function()
+			Snacks.picker.keymaps()
+		end, { desc = "Keymaps" })
+
+		-- Git
+		vim.keymap.set("n", "<leader>gb", function()
+			Snacks.picker.git_branches()
+		end, { desc = "Git Branches" })
+		vim.keymap.set("n", "<leader>gl", function()
+			Snacks.picker.git_log()
+		end, { desc = "Git Log" })
+		vim.keymap.set("n", "<leader>gs", function()
+			Snacks.picker.git_status()
+		end, { desc = "Git Status" })
+		vim.keymap.set("n", "<leader>gd", function()
+			Snacks.picker.git_diff()
+		end, { desc = "Git Diff (Hunks)" })
+
+		-- GitHub
+		vim.keymap.set("n", "<leader>is", function()
+			Snacks.picker.gh_issue({ state = "all" })
+		end, { desc = "GitHub Issues (all)" })
+		vim.keymap.set("n", "<leader>pr", function()
+			Snacks.picker.gh_pr({ state = "all" })
+		end, { desc = "GitHub PR (all)" })
 
 		-- Others
-		{
-			"<leader>lg",
-			function()
-				Snacks.lazygit()
-			end,
-			desc = "Lazygit",
-		},
-	},
+		vim.keymap.set("n", "<leader>lg", function()
+			Snacks.picker.lazygit()
+		end, { desc = "Lazygit" })
+	end,
 }
