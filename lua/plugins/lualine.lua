@@ -4,12 +4,11 @@ return {
 	event = "VeryLazy",
 	opts = {
 		options = {
-			icon_enabled = true,
+			icons_enabled = false,
 			theme = "auto",
 			component_separators = { left = "|", right = "|" },
 			section_separators = { left = "", right = "" },
 			global_status = true,
-			ignore_focus = { "oil" },
 			refresh = {
 				statusline = 500,
 				tabline = 500,
@@ -27,7 +26,7 @@ return {
 				},
 			},
 			lualine_b = {
-				{ "branch", icon = "󰊢" },
+				{ "branch" },
 				{
 					"diff",
 					colored = true,
@@ -38,8 +37,9 @@ return {
 				{
 					"filename",
 					file_status = true,
+					new_file_status = true,
 					path = 1,
-					shorting_target = 40,
+					shorting_target = 30,
 					symbols = {
 						modified = "[+]",
 						readonly = "[-]",
@@ -58,16 +58,23 @@ return {
 			},
 			lualine_x = {
 				{
-					"lsp_status",
-					icon = "",
-					symbols = {
-						spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" },
-						done = "✓",
-						separator = ", ",
-					},
+					function()
+						local clients = vim.lsp.get_clients({ bufnr = 0 })
+						if #clients == 0 then
+							return ""
+						end
+						if #clients == 1 then
+							return "" .. clients[1].name
+						end
+						local names = vim.tbl_map(function(c)
+							return c.name:match("^%a+")
+						end, clients)
+						return "" .. table.concat(names, ", ")
+					end,
 				},
 				{
 					"filetype",
+					icons_enabled = true,
 					colored = true,
 					icon_only = false,
 				},
@@ -75,6 +82,7 @@ return {
 			lualine_y = {
 				{
 					"fileformat",
+					icons_enabled = true,
 					symbols = {
 						unix = "LF",
 						dos = "CRLF",
@@ -94,6 +102,6 @@ return {
 			lualine_z = {},
 		},
 
-		extensions = { "oil", "quickfix", "mason", "lazy" },
+		extensions = { "quickfix", "mason", "lazy" },
 	},
 }

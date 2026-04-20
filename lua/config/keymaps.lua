@@ -1,8 +1,29 @@
 local map = vim.keymap.set
 
+-- Toggle VIETNAMESE keymap
+vim.api.nvim_create_user_command("VnKeymapToggle", function()
+    local current = vim.o.keymap
+    if current == "vietnamese-telex_utf-8" then
+        vim.opt.keymap = ""
+        vim.opt.iminsert = 0
+        print("Vietnamese keymap OFF")
+    else
+        vim.opt.keymap = "vietnamese-telex_utf-8"
+        vim.opt.iminsert = 1
+        print("Vietnamese keymap ON")
+    end
+end, {})
+
 -- TERMINAL MODE
-map("n", "<leader>vt", ":vsplit<CR>:term<CR>a", { desc = "Vertical Terminal" })
-map("t", "<Esc>", "<C-\\><C-n>", { desc = "NORMAL MODE in Terminal" })
+local width = math.floor(vim.o.columns * 0.34)
+map("n", "<leader>tm", function()
+	vim.cmd("vsplit")
+	vim.cmd("wincmd l")
+	vim.cmd("vertical resize " .. width)
+	vim.cmd("terminal")
+	vim.cmd("startinsert")
+end, { desc = "Vertical Terminal Panel", noremap = true, silent = true })
+map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "NORMAL MODE in Terminal" })
 
 -- Move lines in visual selection
 map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move down a line in visual selection" })

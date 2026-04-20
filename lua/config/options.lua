@@ -4,7 +4,6 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- Basic
-opt.wrap = true
 opt.number = true
 opt.relativenumber = true
 opt.cursorline = true
@@ -16,7 +15,7 @@ opt.timeoutlen = 500
 
 -- Shell
 if vim.fn.has("win32") == 1 then
-	opt.shell = "pwsh"
+	opt.shell = vim.fn.executable("pwsh") == 1 and "pwsh" or "powershell"
 	opt.shellcmdflag =
 		"-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
 	opt.shellredir = "-RedirectStandardOutput %s -NoNewWindow -Wait"
@@ -32,6 +31,7 @@ opt.shiftwidth = 4
 opt.autoindent = true
 opt.smartindent = true
 opt.expandtab = true
+opt.wrap = true
 
 -- Search
 opt.ignorecase = true
@@ -47,15 +47,12 @@ opt.writebackup = false
 opt.undofile = true
 opt.undodir = vim.fn.stdpath("data") .. "/undo"
 
--- ShaDa
-opt.shadafile = vim.fn.stdpath("data") .. "/shada/main.shada"
-opt.shada = "'100,<50,s10,h,/100"
-
 -- Visual
 opt.signcolumn = "yes"
 opt.winborder = "single"
 opt.background = "dark"
 opt.termguicolors = true
+opt.showmode = false
 
 -- Highlight when yanking
 vim.api.nvim_create_autocmd("TextYankPost", {

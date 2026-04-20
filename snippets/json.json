@@ -1,0 +1,21 @@
+{
+  "SQL Formatter PostgreSQL Config": {
+    "prefix": "postgres",
+    "body": [
+      "{",
+      "  \"language\": \"postgresql\",",
+      "  \"tabWidth\": 2,",
+      "  \"useTabs\": false,",
+      "  \"keywordCase\": \"upper\",",
+      "  \"dataTypeCase\": \"upper\",",
+      "  \"functionCase\": \"upper\",",
+      "  \"identifierCase\": \"lower\",",
+      "  \"indentStyle\": \"standard\",",
+      "  \"logicalOperatorNewline\": \"before\",",
+      "  \"expressionWidth\": 80,",
+      "  \"linesBetweenQueries\": 2",
+      "}"
+    ],
+    "description": "sql-formatter config for PostgreSQL"
+  }
+}

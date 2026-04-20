@@ -5,7 +5,7 @@ return {
 	opts = {
 		default_file_explorer = true,
 		columns = {
-			"size",
+			{ "size", align = "right" },
 			"icon",
 		},
 		delete_to_trash = true,
